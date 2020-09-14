@@ -55,6 +55,7 @@ maxX1<-max(table(x1))
 ```
 
 ![](muhammad-umar-hw1-cs402_files/figure-gfm/unnamed-chunk-4-1.png)<!-- -->
+
 The frequency of writes is 66538 while the frequency of reads is 150699
 in the spice file.
 
@@ -74,6 +75,7 @@ maxX2<-max(table(x2))
 ```
 
 ![](muhammad-umar-hw1-cs402_files/figure-gfm/unnamed-chunk-5-1.png)<!-- -->
+
 The frequency of writes is 66538 while the frequency of reads is 150699
 in the tex file.
 
