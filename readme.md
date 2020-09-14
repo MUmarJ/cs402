@@ -1,14 +1,14 @@
-CS 402 Homework 1
-================
+# CS 402 Homework 1
+
 Muhammad Umar
 
 #### Question 1
 
-##### (a) Using trace files, i.e. files that contain addresses issued by some CPU to execute some application(s), draw the histogram of address distribution for each of them (2x20 points). On the Ox axis of the plot you will have the address number (don’t start with zero, rather with the smallest address you find in the file and go up to the maximum address in the file). On the Oy axis you will have the number of occurrences for each particular address.
+##### (a) Using trace files, i.e. files that contain addresses issued by some CPU to execute some application(s), draw the **histogram** of address distribution for each of them (2x20 points). On the Ox axis of the plot you will have the address number (don’t start with zero, rather with the smallest address you find in the file and go up to the maximum address in the file). On the Oy axis you will have the number of occurrences for each particular address.
 
 ###### Spice.din
 
-``` r
+```r
 data1 <- read.csv("spice.din", sep=" ",header=F, stringsAsFactors = F)
 addressFreq1 <- table(data1[,2])
 barplot(addressFreq1, main="Frequency of address operations in Spice", xlab = "Address", ylab = "Access Count")
@@ -18,7 +18,7 @@ barplot(addressFreq1, main="Frequency of address operations in Spice", xlab = "A
 
 ###### Tex.din
 
-``` r
+```r
 data2 <- read.csv("tex.din", sep=" ",header=F, stringsAsFactors = F)
 addressFreq2 <- table(data1[,2])
 barplot(addressFreq2, main="Frequency of address operations in Tex", xlab = "Address", ylab = "Access Count")
@@ -28,7 +28,7 @@ barplot(addressFreq2, main="Frequency of address operations in Tex", xlab = "Add
 
 ##### Comment based on the histograms (5).
 
-``` r
+```r
 # Sort as frequency table as descending and fetch the first name
 spiceMaxName<-names(sort(-table(data1[,2])))[1]
 texMaxName<-names(sort(-table(data2[,2])))[1]
@@ -42,7 +42,7 @@ very similar for both.
 
 ###### Spice.din
 
-``` r
+```r
 x1<-data1$V1
 maxX1<-max(table(x1))
 {bp1 <- barplot(
@@ -60,7 +60,7 @@ in the spice file.
 
 ###### Tex.din
 
-``` r
+```r
 x2<-data2$V1
 maxX2<-max(table(x2))
 {bp2 <- barplot(
@@ -168,10 +168,10 @@ instruction.
 ##### Based on the retail price of the two systems, which one is more cost effective (5)?
 
 The first machine is a GT73VR with a Skylake i7 (6th generation) running
-at 3.3GHz clock speed with a M2 NVMe SSD and costs approximately $$1500
+at 3.3GHz clock speed with a M2 NVMe SSD and costs approximately \$1500
 today. The second machine is a 15 inch Macbook Pro 2015 equipped with a
 Broadwell i7 (5th generation) running at 2.2Ghz clock speed with a M2
-SSD and costs approximately $1100 today.
+SSD and costs approximately \$1100 today.
 
 The first machine is 36% more expensive while the difference of
 performance is greater than 38%.
@@ -254,7 +254,7 @@ while float operations are 40.94% slower.
 | Compiler                | G++ MinGW  | LLVM-g++                      |
 | SSD Random Read Speeds  | 39.24 MB/s | 19.27 MB/s                    |
 | SSD Random Write Speeds | 88.6 MB/s  | 30.98 MB/s                    |
-| Price                   | $1,500     | $1100                         |
+| Price                   | \$1,500    | \$1100                        |
 
 The SSD read/write speeds were taken using Crystal Disk Mark’s random
 4kb read/write single-thread test
