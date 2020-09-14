@@ -1,0 +1,190 @@
+---
+title: "CS 402 Homework 1"
+output: rmarkdown::github_document
+author: Muhammad Umar
+---
+
+#### Question 1
+
+##### 	(a) Using trace files, i.e. files that contain addresses issued by some CPU to execute some application(s), draw the histogram of address distribution for each of them (2x20 points). On the Ox axis of the plot you will have the address number (don't start with zero, rather with the smallest address you find in the file and go up to the maximum address in the file). On the Oy axis you will have the number of occurrences for each particular address.
+
+###### Spice.din
+```{r}
+data1 <- read.csv("spice.din", sep=" ",header=F, stringsAsFactors = F)
+addressFreq1 <- table(data1[,2])
+barplot(addressFreq1, main="Frequency of address operations in Spice", xlab = "Address", ylab = "Access Count")
+```
+
+###### Tex.din
+```{r}
+data2 <- read.csv("tex.din", sep=" ",header=F, stringsAsFactors = F)
+addressFreq2 <- table(data1[,2])
+barplot(addressFreq2, main="Frequency of address operations in Tex", xlab = "Address", ylab = "Access Count")
+```
+
+##### Comment based on the histograms (5).
+
+```{r}
+# Sort as frequency table as descending and fetch the first name
+spiceMaxName<-names(sort(-table(data1[,2])))[1]
+texMaxName<-names(sort(-table(data2[,2])))[1]
+```
+
+The most highest operation count for an address in spice.din was 0x`r spiceMaxName` while for tex.din, it was 0x`r texMaxName`, although the bar plots look very similar for both.
+
+##### (b) What is the frequency of writes (5)? What is the frequency of reads (5)? 
+
+###### Spice.din
+```{r}
+x1<-data1$V1
+maxX1<-max(table(x1))
+{bp1 <- barplot(
+  table(data1$V1), xaxt="n", main="Frequency of operations in Spice",ylim=(c(0,maxX1)), xlab="Operation", ylab="Frequency"
+  )
+  axis(1, at=1:3, labels=c("Read","Write","Fetch"))
+  options(scipen = 6)
+  text(x=bp1, y= table(x1)/2, labels=as.character(table(x1)))
+}
+```
+The frequency of writes is `r table(data1$V1)[2]` while the frequency of reads is `r table(data1$V1)[1]` in the spice file.
+
+###### Tex.din
+```{r}
+x2<-data2$V1
+maxX2<-max(table(x2))
+{bp2 <- barplot(
+  table(data2$V1), main="Frequency of operations in Tex",
+  xlab="Operation", ylab="Frequency", xaxt="n"
+  )
+  options(scipen = 5)
+  axis(1, at=1:3, labels=c("Read","Write","Fetch"))
+  text(x=bp2, y= table(x2)/2, labels=as.character(table(x2)))
+}
+```
+The frequency of writes is `r table(data1$V1)[2]` while the frequency of reads is `r table(data1$V1)[1]` in the tex file.
+
+##### Please comment on these results (5).
+
+Both spice.din and tex.din files show that instruction fetch was the most common operation with spice having `r maxX1` operations and tex having `r maxX2` operations. They both have more read operations than write as well. This makes sense as they address has to be fetched regardless of whether read or write will be performed and it is common to read the value, then perform some computation or mutate it accordingly then write it again on either the same or other address.
+
+#### Question 2
+
+##### (a) Write a program, using your favorite programming language, that multiplies two rectangular matrices -- please no square matrices -- whose elements are randomly generated. You will have two versions of the program, one in which matrix elements are integers and another one where they are real numbers (double) (2x15 points). Measure the time it takes each program to complete (2x5) and then compare the performance of the two systems (5).
+
+
+```{r echo=F}
+gt73<-read.csv("./csv/GT73VR.csv", header = T, sep=",")
+mac<-read.csv("./csv/MacPro2015.csv", header = T, sep=",")
+t1Column<-gt73[1:3]
+t2Column<-mac[1:3]
+library(knitr)
+kable(list(t1Column,t2Column),
+      caption="Machine 1 vs Machine 2 time taken in seconds",
+      col.names = c("Runs", "Integer", "Float")
+      )
+```
+
+###### Performance Comparison
+
+```{r echo=F}
+matrix <- c("Integer","Float")
+machine1Average <- c(mean(gt73[,2]),mean(gt73[,3]))
+machine2Average <- c(mean(mac[,2]),mean(mac[,3]))
+dfColumn <-data.frame(matrix,machine1Average,machine2Average)
+kable(
+  dfColumn,
+  col.names = c("Matrix Type", "Machine 1 Average", "Machine 2 Average")
+      )
+```
+
+On average, Integer operations are 28.3% slower on the 2nd machine while float operations are 37.8% slower.
+
+
+##### Is the performance ratio the same as the clock rate ratio of the two systems (5)? Explain.
+
+No, the clock speed of the first machine is 150% greater (3.3 GHz versus 2.2 Ghz of the second) while the difference in performance is less than 40% on average.
+
+This is because clock speeds are not the determining factor of computer performance but cycles per instruction is. Other factors such as available cache, type of storage (NVME SSD vs SATA SSD), type of RAM depending on architecture (DDR4 vs LPDDR3) all affect cycles per instruction.
+
+
+##### Based on the retail price of the two systems, which one is more cost effective (5)? 
+
+The first machine is a GT73VR with a Skylake i7 (6th generation) running at 3.3GHz clock speed with a M2 NVMe SSD and costs approximately \$$1500 today. The second machine is a 15 inch Macbook Pro 2015 equipped with a Broadwell i7 (5th generation) running at 2.2Ghz clock speed with a M2 SSD and costs approximately \$1100 today.
+
+The first machine is 36% more expensive while the difference of performance is greater than 38%.
+
+Hence, the first machine (MSI GT73VR) is more cost effective.
+
+##### (b) Change your multiplication algorithm and repeat the steps above; for instance, if you used the the naive multiplication algorith with the column in the inner loop, then just use the same algorithm with the row in the inner loop (same scoring as part a).
+
+```{r echo=F}
+gt73<-read.csv("./csv/GT73VR.csv", header = T, sep=",")
+mac<-read.csv("./csv/MacPro2015.csv", header = T, sep=",")
+t1Row<-gt73[c(1,4:5)]
+t2Row<-mac[c(1,4:5)]
+library(knitr)
+kable(list(t1Row,t2Row),
+      caption="Machine 1 vs Machine 2 time taken in seconds (rows in inner loop)",
+      col.names = c("Runs", "Integer", "Float")
+      )
+```
+
+
+###### Performance Comparison
+
+```{r echo=F}
+matrix <- c("Integer","Float")
+machine1Average <- c(mean(gt73[,4]),mean(gt73[,5]))
+machine2Average <- c(mean(mac[,4]),mean(mac[,5]))
+dfRow <-data.frame(matrix,machine1Average,machine2Average)
+kable(
+  dfRow,
+  col.names = c("Matrix Type", "Machine 1 Average", "Machine 2 Average")
+      )
+```
+
+On average, Integer operations are `r signif(((dfRow[1,3]/dfRow[1,2])-1)*100, digits=4)`% slower on the 2nd machine while float operations are `r signif(((dfRow[2,3]/dfRow[2,2])-1)*100, digits=4)`% slower.
+
+##### Machine Description
+
+```{r echo=F}
+descriptionRows <- c(
+  "Manufacturer",
+  "CPU Type",
+  "Clock Speed",
+  "RAM",
+  "OS",
+  "Compiler",
+  "SSD Random Read Speeds",
+  "SSD Random Write Speeds",
+  "Price"
+)
+
+machine1Stats <- c(
+  "MSI",
+  "i7-6820HK",
+  "3.3GHz",
+  "32GB",
+  "Windows 10",
+  "G++ MinGW",
+  "39.24 MB/s",
+  "88.6 MB/s",
+  "$1,500 "
+)
+
+machine2Stats <- c(
+  "Apple",
+  "i7 Broadwell (5th generation)",
+  "2.2 GHz",
+  "16 GB",
+  "macOS Catalina",
+  "LLVM-g++",
+  "19.27 MB/s",
+  "30.98 MB/s",
+  "$1100"
+)
+
+statsDF <- data.frame(descriptionRows, machine1Stats, machine2Stats)
+kable(statsDF, col.names = c("Attribute", "Machine 1", "Machine 2"))
+```
+The SSD read/write speeds were taken using Crystal Disk Mark's random 4kb read/write single-thread test
