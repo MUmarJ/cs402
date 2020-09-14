@@ -259,6 +259,7 @@ while float operations are 40.94% slower.
 The SSD read/write speeds were taken using Crystal Disk Mark’s random
 4kb read/write single-thread test.
 
-The results csv files can be found in the /csv folder and the benchmark program (C++) can be found in /programs
+The results csv files can be found in the /csv folder and the benchmark program (C++)
+can be found in /programs
 
 Thank you!
