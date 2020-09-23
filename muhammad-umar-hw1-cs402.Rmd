@@ -1,7 +1,23 @@
 ---
 title: "CS 402 Homework 1"
-output: rmarkdown::github_document
 author: Muhammad Umar
+header-includes:
+- \usepackage{fancyhdr}
+- \usepackage{lastpage}
+- \pagestyle{fancy}
+- \fancyhead[L]{Muhammad Umar}
+- \fancypagestyle{plain}{}
+- \chead{\thepage\ / \pageref{LastPage}}
+- \fancyhead[R]{Homework \#1}
+- \lfoot{cs402 V02 Fall 2020}
+- \rfoot{Illinois Institute of Technology - Computer Science}
+- \cfoot{}
+
+output:
+  pdf_document:
+    keep_tex: yes
+    latex_engine: xelatex
+
 ---
 
 #### Question 1
@@ -12,14 +28,16 @@ author: Muhammad Umar
 ```{r}
 data1 <- read.csv("spice.din", sep=" ",header=F, stringsAsFactors = F)
 addressFreq1 <- table(data1[,2])
-barplot(addressFreq1, main="Frequency of address operations in Spice", xlab = "Address", ylab = "Access Count")
+barplot(addressFreq1, main="Frequency of address operations in Spice", 
+        xlab = "Address", ylab = "Access Count")
 ```
 
 ###### Tex.din
 ```{r}
 data2 <- read.csv("tex.din", sep=" ",header=F, stringsAsFactors = F)
 addressFreq2 <- table(data1[,2])
-barplot(addressFreq2, main="Frequency of address operations in Tex", xlab = "Address", ylab = "Access Count")
+barplot(addressFreq2, main="Frequency of address operations in Tex", 
+        xlab = "Address", ylab = "Access Count")
 ```
 
 ##### Comment based on the histograms (5).
@@ -39,7 +57,8 @@ The most highest operation count for an address in spice.din was 0x`r spiceMaxNa
 x1<-data1$V1
 maxX1<-max(table(x1))
 {bp1 <- barplot(
-  table(data1$V1), xaxt="n", main="Frequency of operations in Spice",ylim=(c(0,maxX1)), xlab="Operation", ylab="Frequency"
+  table(data1$V1), xaxt="n", main="Frequency of operations in Spice",
+  ylim=(c(0,maxX1)), xlab="Operation", ylab="Frequency"
   )
   axis(1, at=1:3, labels=c("Read","Write","Fetch"))
   options(scipen = 6)
