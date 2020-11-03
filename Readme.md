@@ -1,344 +1,203 @@
-CS 402 Homework 3
-================
+# CS 402 Homework 4
+
 Muhammad Umar
 
+#### 5.1 In this exercise we look at memory locality properties of matrix computation. Th e following code is written in C, where elements within the same row are stored contiguously. Assume each word is a 32-bit integer.
 
+> for (I=0; I\<8; I++)
 
+> > for (J=0; J\<8000; J++)
 
+> > > A\[I\]\[J\]=B\[I\]\[0\]+A\[J\]\[I\];
 
+##### 5.1.1 How many 32-bit integers can be stored in a 16-byte cache block?
 
+As 1 byte = 8 bits
 
+Then, 32/8 = 4 bytes
 
+Hence, 16/4 = 4 integers
 
+So, 4 integers of 32-bit size can be stored in a 16-byte cache block.
 
+##### 5.1.2 References to which variables exhibit temporal locality?
 
+References to variables “i”,“j” and “B\[I\]\[0\]” exhibit temporal
+locality.
 
+##### 5.1.3 References to which variables exhibit spatial locality?
 
+References to variable “A\[I\]\[J\]” exhibit spatial locality.
 
+##### Locality is affected by both the reference order and data layout. The same computation can also be written below in Matlab, which differs from C by storing matrix elements within the same column contiguously in memory.
 
+> for I=1:8
 
+> > for J=1:8000
 
+> > > A(I,J)=B(I,0)+A(J,I);
 
+> > end
 
+> end
 
+##### 5.1.4 How many 16-byte cache blocks are needed to store all 32-bit matrix elements being referenced?
 
-#### 2.12 Assume that registers $s0 and $s1 hold the values 0x80000000 and 0xD0000000, respectively.
+There are 8 \* 8000 = 64,000 accesses for A\[I\]\[J\]. Similarly,
+A\[J\]\[I\] is accessed for 64,000 times as well. However, we have an
+overlap of the first 8 values, 8 times, i.e., 64 that will only be
+cached once. Hence, we need to store:
 
-##### 2.12.1 What is the value of $t0 for the following assembly code?
+> (2 \* 64,000) - 64 = 1.2794410^{5} elements
 
-##### add $t0, $s0, $s1
+And to store them, we need:
 
-0x8000 0000 + 0xD000 0000 = 0x1 5000 0000
+> 1.2794410^{5}/4 = 3.198610^{4} cache blocks
 
-Since the answer is beyond 32-bits or 8 bytes, **only 0x5000 0000 will
-be stored in $t0** due to overflow
+##### 5.1.5 References to which variables exhibit temporal locality?
 
-##### 2.12.2 Is the result in $t0 the desired result, or has there been overflow?
+References to variables “i”,“j” and “B\[I\]\[0\]” exhibit temporal
+locality.
 
-No, it is not the desired result as there has been a overflow.
+##### 5.1.6 References to which variables exhibit spatial locality?
 
-##### 2.12.3 For the contents of registers $s0 and $s1 as specified above, what is the value of $t0 for the following assembly code?
+References to variable “A\[J\]\[I\]” exhibit spatial locality as columns
+are stored contiguously.
 
-##### sub $t0, $s0, $s1
+##### 5.2 Caches are important to providing a high-performance memory hierarchy to processors. Below is a list of 32-bit memory address references, given as word addresses.
 
-Subtraction is equivalent to adding a two’s complement number in
-assembly.
+> 3, 180, 43, 2, 191, 88, 190, 14, 181, 44, 186, 253
 
-Hence,
+##### 5.2.1 For each of these references, identify the binary address, the tag, and the index given a direct-mapped cache with 16 one-word blocks.. Also list if each reference is a hit or a miss, assuming the cache is initially empty.
 
-0xD000 0000
+![Table 5.2.1](./tables/table521.png)
 
-One’s complement = 0010 1111 1111 1111 1111 1111 1111 1111
+##### 5.2.2 For each of these references, identify the binary address, the tag, and the index given a direct-mapped cache with two-word blocks and a total size of 8 blocks. Also list if each reference is a hit or a miss, assuming the cache is initially empty.
 
-Two’s complement (+1) = 0011 0000 0000 0000 0000 0000 0000 0000 = 0x3000
-0000
+![Table 5.2.1](./tables/table522.png)
 
-0x8000 0000 - 0xD000 0000 = 0x8000 0000 + 0x3000 0000 = 0xB000 0000
+##### 5.3 For a direct-mapped cache design with a 32-bit address, the following bits of the address are used to access the cache.
 
-##### 2.12.4 Is the result in $t0 the desired result, or has there been overflow?
+![Table 5.3](./tables/table53q.png)
 
-It is the desired result, there is no overflow.
+##### 5.3.1 What is the cache block size (in words)?
 
-##### 2.12.5 For the contents of registers $s0 and $s1 as specified above, what is the value of $t0 for the following assembly code?
+Cache block size = 2^(offset bits) = 2^5 bytes = 32 bytes
 
-##### add $t0, $s0, $s1
+As we know, 4 bytes = 1 word. Hence,
 
-##### add $t0, $t0, $s0
+Cache block size = 32/4 = 8 words
 
-0x8000 0000 + 0xD000 0000 = 0x1 5000 0000
+##### 5.3.2 How many entries does the cache have?
 
-0x1 5000 0000 + 0x8000 0000 = 0x1 D000 0000
+Cache entries/blocks = 2^(index bits) = 2^5 = 32 entries
 
-$t0 = 0xD000 0000 due to overflow
+##### 5.3.3 What is the ratio between total bits required for such a cache implementation over the data storage bits?
 
-##### 2.12.6 Is the result in $t0 the desired result, or has there been overflow?
+Total bits = entries \* ( valid bit(1) + tag bits + cache size \* data
+bits)
 
-There has been overflow.
+Total bits = 32 \* ( 1 + 22 + (32 \* 8)) = 8928
 
-#### 2.19 Assume the following register contents:
+Data storage bits = entries \* cache size \* data bits
 
-> $t0 = 0xAAAAAAAA, $t1 = 0x12345678
+Data storage bits = 32 \* 32 \* 8 = 8192
 
-##### 2.19.1 For the register values shown above, what is the value of $t2 for the following sequence of instructions?
+Total bits/Data storage bits ratio = 8928/8192 = 1.0898438
 
-> sll $t2, $t0, 44 or $t2, $t2, $t1
+##### Starting from power on, the following byte-addressed cache references are recorded.
 
-0x12345678 = 1010 1010 1010 1010 1010 1010 1010 1010
+![Table 5.3.3](./tables/table533q.png)
 
-On shifting $t0 left 44 times, we get
+##### 5.3.4 How many blocks are replaced?
 
-$t2 = 0000 0000 0000 0000 0000 0000 0000 0000
+![Table 5.3.4](./tables/table534.png)
 
-Hence, after doing a logical OR with 0, we will get
+Hence, **four** tables are being replaced.
 
-$t2 = 0x12345678
+##### 5.3.5 What is the hit ratio?
 
-##### 2.19.2 For the register values shown above, what is the value of $t2 for the following sequence of instructions?
+Using the table above, we can see we have 4 hits out of 12. Hence,
 
-> sll $t2, $t0, 4
+Hit Ratio = 4/12 = 33.34%
 
-> andi $t2, $t2, -1
+##### 5.3.6 List the final state of the cache, with each valid entry represented as a record of \<index, tag, data\>.
 
-0x12345678 = 1010 1010 1010 1010 1010 1010 1010 1010
+\<00100, 0010, mem\[2176\]-mem\[2207\]\>
 
-On shifting $t0 left 44 times, we get
+\<00101, 0000, mem\[160\]-mem\[191\]\>
 
-$t2 = 1010 1010 1010 1010 1010 1010 1010 0000 =\> 0xAAAA AAA0
+\<00000, 0011, mem\[3072\]-mem\[3103\]\>
 
-\-1 = 1111 1111 1111 1111 1111 1111 1111 1111
+\<00111, 0000, mem\[224\]-mem\[255\]\>
 
-Hence, the AND operation has no effect and
+##### 5.5 Media applications that play audio or video files are part of a class of workloads called “streaming” workloads; i.e., they bring in large amounts of data but do not reuse much of it. Consider a video streaming workload that accesses a 512 KiB working set sequentially with the following address stream:
 
-$t2 = 0xAAAA AAA0
+> 0, 2, 4, 6, 8, 10, 12, 14, 16, …
 
-##### 2.19.3 For the register values shown above, what is the value of $t2 for the following sequence of instructions?
+##### 5.5.1 Assume a 64-KiB direct-mapped cache with a 32-byte block. What is the miss rate for the address stream above? How is this miss rate sensitive to the size of the cache or the working set? How would you categorize the misses this workload is experiencing, based on the 3C model?
 
-> srl $t2, $t0, 3
+32 byte block size = log2(32) = 5 offset bits
 
-> andi $t2, $t2, 0xFFEF
+This means that 0 address will miss and 0 to 31 (1 1111) will brought in
+to cache. Hence, subsequent accesses to 2, 4, 6, .., 30 will hit.
 
-0x12345678 = 1010 1010 1010 1010 1010 1010 1010 1010
+Similarly, 32 will miss and then 34, 36, 38, …, 62 will hit. Hence,
+there is a miss for every 16 accesses.
 
-On shifting $t0 right 3 times, we get
+Therefore, the miss rate is
 
-$t2 = 0001 0101 0101 0101 0101 0101 0101 0101
+1/16 = 6.25%
 
-0xFFEF = 0000 0000 0000 0000 1111 1111 1110 1111
+##### 5.5.2 Re-compute the miss rate when the cache size is 16 bytes, 64 bytes, and 128 bytes. What kind of locality is this workload exploiting?
 
-Applying AND operation
+16 bytes = 4 offset bits (1111)
 
-$t2 = 0000 0000 0000 0000 0101 0101 0100 0101 =\> 0x0000 5545
+Memory access is with a displacement of 2. Hence, there will be a miss
+for:
 
-#### 2.20 Find the shortest sequence of MIPS instructions that extracts bits 16 down to 11 from register $t0 and uses the value of this field to replace bits 31 down to 26 in register $t1 without changing the other 26 bits of register $t1
+16/2 = 8 accesses
 
-*Prepare $t0 for extraction*
+Miss Rate for 16 = 1/8
 
-srl $t0, $t0, 11 \# t0 = t0 \>\> 11
+Miss Rate for 64 = 1/32
 
-sll $t0, $t0, 26 \# t0 = t0 \<\< 26
+Miss Rate for 128 = 1/64
 
-*Remove bits from 31 to 26 = 6 bits*
+This kind of workload exploits spatial locality (neighboring address
+accesses).
 
-sll $t1, $t1, 6
+##### 5.6 In this exercise, we will look at the different ways capacity affects overall performance. In general, cache access time is proportional to capacity. Assume that main memory accesses take 70 ns and that memory accesses are 36% of all instructions. The following table shows data for L1 caches attached to each of two processors, P1 and P2.
 
-srl $t1, $t1, 6
+![Table 5.6](./tables/table56q.png)
 
-*Add $t0 bits to $t1 and store in $t1*
+##### 5.6.1 Assuming that the L1 hit time determines the cycle times for P1 and P2, what are their respective clock rates?
 
-or $t1, $t1, $t0
+Cycle Time = 1/Hit Time
 
-#### 2.21 Provide a minimal set of MIPS instructions that may be used to implement the following pseudo instruction:
+P1 Cycle Time = 1/0.66 = 1.5151515 GHz
 
-> not $t1, $t2 // bit-wise invert
+P2 Cycle Time = 1/0.90 = 1.1111111 GHz
 
-MIPS uses three operands and hence, nor is used with zero instead of not
-with two operands.
+##### 5.6.2 What is the Average Memory Access Time for P1 and P2?
 
-nor $t1, $t2, $0
+AMAT = Hit Time + (Miss Rate \* Memory access time)
 
-#### 2.22 For the following C statement, write a minimal sequence of MIPS assembly instructions that does the identical operation. Assume $t1 = A, $t2 = B, and $s1 is the base address of C.
+P1 AMAT = 0.66 + ((8/100) \* 70)
 
-#### A = C\[0\] \<\< 4;
+P1 AMAT = 6.26 seconds
 
-lw \(t1, 0(\)s1) \# load C in A sll $t1, $t1, 4 \# Shift A by 4
+P2 AMAT = 0.90 + ((6/100) \* 70)
 
-#### 2.23 Assume $t0 holds the value 0x00101000. What is the value of $t2 after the following instructions?
+P2 AMAT = 5.1 seconds
 
-> slt $t2, $0, $t0
+##### 5.6.3 Assuming a base CPI of 1.0 without any memory stalls, what is the total CPI for P1 and P2? Which processor is faster?
 
-> bne $t2, $0, ELSE
+Total CPI = base CPI + (Instructions \* Memory access time \* Miss
+Rate)/Hit Rate
 
-> j DONE
+Total CPI for P1 = 1 + (0.36 \* 70 \* 8/100)/0.66 = 4.0545455
 
-> ELSE: addi $t2, $t2, 2
+Total CPI for P2 = 1 + (0.36 \* 70 \* 6/100)/0.90 = 2.68
 
-> DONE:
-
-slt sets $t2 to 1 as $0 \< $t0 (0x0010 1000)
-
-The execution jumps to ELSE as $t0 \!= 0 is true
-
-Finally, add 2 to $t2’s current value (1), we get
-
-$t2 = 3
-
-#### 2.26 Consider the following MIPS loop:
-
-> LOOP: slt $t2, $0, $t1
-
-> beq $t2, $0, DONE
-
-> subi $t1, $t1, 1
-
-> addi $s2, $s2, 2
-
-> j LOOP
-
-> DONE:
-
-##### 2.26.1 Assume that the register $t1 is initialized to the value 10. What is the value in register $s2 assuming $s2 is initially zero?
-
-The loop will run 10 times, adding 2 to $s2 each time.
-
-Hence, if $s0 is 0 at the beginning, the value stored will be 20 by the
-end.
-
-##### 2.26.2 For each of the loops above, write the equivalent C code routine. Assume that the registers $s1, $s2, $t1, and $t2 are integers A,B, I, and temp, respectively.
-
-This code assumes i is initialized by some value (int i = 10 for part 1
-for example)
-
-for (; 0 \< i; i–){ B+=2; }
-
-##### 2.26.3 For the loops written in MIP assembly above, assume that the register $t1 is initialized to the value N. How many MIPS instructions are executed?
-
-In every iteration, 5 instructions are executed except for the last
-iteration when the beq is true where only 2 instructions are executed.
-Hence,
-
-Instructions count = 5 x (N-1) + 2
-
-Instructions count = 5N - 3
-
-#### 2.27 Translate the following C code to MIPS assembly code. Use a minimum number of instructions. Assume that the values of a, b, i, and j are in registers $S0, $S1, $t0, and $t1, respectively. Also, assume that register $S2 holds the base address of the array D.
-
-> for (i = 0; i \< a; i++)
-
-> for (j = 0; j \< b; j++)
-
-> 
-> 
->     D[4*j] = i + j;
-
-##### Ans:
-
-and $t0, $t0, 0 \# int i = 0
-
-// s0 = i limit
-
-// s1 = j limit
-
-OUTER: beq $t0, $s0, DONE and $t1, $t1, $0 \# set j = 0
-
-INNER: beq $t1, $s1, INNER\_END addu $t9, $t0, $t1 \# t9 = i+j sll $k0,
-$t1, 4 \# Multiply j by 4 and store in $k0 \#sw \(t9, 0(\)k0) \# Store
-i+j to address D\[j\*4\]
-
-    addiu $t1, $t1, 1   # j++
-    j INNER
-
-INNER\_END: addiu $t0, $t0, 1 \#i++ j OUTER
-
-DONE:
-
-#### 2.38 Consider the following code:
-
-> lbu \(t0, 0(\)t1) sw \(t0, 0(\)t2)
-
-#### Assume that the register $t1 contains the address 0x1000 0000 and the register $t2 contains the address 0x1000 0010. Note the MIPS architecture utilizes big-endian addressing. Assume that the data (in hexadecimal) at address 0x1000 0000 is: 0x11223344. What value is stored at the address pointed to by register $t2?
-
-MIPS processor uses Big Endian addressing. hence lbu will load the most
-significant byte (0x11).
-
-Hence, 0x0000 0011 is stored at address pointed to by register $t2.
-
-#### 2.39 Write the MIPS assembly code that creates the 32-bit constant 0010 0000 0000 0001 0100 1001 0010 0100 two and stores that value to register $t1.
-
-0010 0000 0000 0001 0100 1001 0010 0100 = 0x2001 4924
-
-lui $t1, 0x2001 ori $t1, 0x4924
-
-#### 2.46 Assume for a given processor the CPI of arithmetic instructions is 1, the CPI of load/store instructions is 10, and the CPI of branch instructions is 3. Assume a program has the following instruction breakdowns: 500 million arithmetic instructions, 300 million load/store instructions, 100 million branch instructions.
-
-Execution time = (Instructions \* CPI)/Clock Rate or Cycles/Clock Rate
-
-Instructions = (500 \* 1) + (300 \* 10) + ( 100 \* 3) = 3800
-
-Execution time = 3800 \* 10^6 \* Clock Cycle Time
-
-##### 2.46.1 Suppose that new, more powerful arithmetic instructions are added to the instruction set. On average, through the use of these more powerful arithmetic instructions, we can reduce the number of arithmetic instructions needed to executea program by 25%, and the cost of increasing the clock cycle time by only 10%. Is this a good design choice? Why?
-
-Execution time = (Instructions \* CPI)/Clock Rate or Cycles/Clock Rate
-
-New Instructions = (0.75 \* 500 \* 1) + (300 \* 10) + ( 100 \* 3) = 3675
-
-New Execution Time = 3675 \* 1.1 \* 10^6 \* Clock Cycle Time.
-
-New Execution Time = 4.042510^{9} \* Clock Cycle Time.
-
-The execution time or CPU time has overall increased. Hence this is a
-bad design choice.
-
-##### 2.46.2 Suppose that we find a way to double the performance of arithmetic instructions. What is the overall speedup of our machine? What if we find a way to improve the performance of arithmetic instructions by 10 times?
-
-Doubling would mean the instructions counts for arithmetic would half.
-
-Execution time = (Instructions \* CPI)/Clock Rate or Cycles/Clock Rate
-
-New Instructions = (0.5 \* 500 \* 1) + (300 \* 10) + ( 100 \* 3) = 3550
-
-New Execution Time = 3550 \* 10^6 \* Clock Cycle Time.
-
-Speedup = 3550/3800 = 0.9342105
-
-Hence, the overall improvement in execution time is 6.5789474%
-
-Improving by 10 times would mean the instructions counts for arithmetic
-would only be 10% of the original.
-
-Execution time = (Instructions \* CPI)/Clock Rate or Cycles/Clock Rate
-
-New Instructions = (0.1 \* 500 \* 1) + (300 \* 10) + ( 100 \* 3) = 3350
-
-New Execution Time = 3350 \* 10^6 \* Clock Cycle Time.
-
-Speedup = 3350/3800 = 0.8815789
-
-Hence, the overall improvement in execution time is just 11.8421053%
-despite the massive decrease in arithmetic instructions.
-
-#### 2.47 Assume that for a given program 70% of the executed instructions are arithmetic, 10% are load/store, and 20% are branch.
-
-##### 2.47.1 Given this instruction mix and the assumption that an arithmetic instruction requires 2 cycles, a load/store instruction takes 6 cycles, and a branch instruction takes 3 cycles, find the average CPI.
-
-Average CPI = (0.7 \* 2) + (0.1 \* 6) + (0.2 \* 3) = 2.6
-
-##### 2.47.2 For a 25% improvement in performance, how many cycles, on average, may an arithmetic instruction take if load/store and branch instructions are not improved at all?
-
-New Average CPI = 0.75 \* 2.6 = 1.95
-
-1.95 = (0.7 \* New Arithmetic Cycles) + (0.1 \* 6) + (0.2 \* 3)
-
-New Arithmetic Cycles = (1.95 - 1.2)/0.7
-
-New Arithmetic Cycles = 1.0714286 cycles or 1.07 cycles.
-
-##### 2.47.3 For a 50% improvement in performance, how many cycles, on average, may an arithmetic instruction take if load/store and branch instructions are not improved at all?
-
-New Average CPI = 0.5 \* 2.6 = 1.3
-
-1.3 = (0.7 \* New Arithmetic Cycles) + (0.1 \* 6) + (0.2 \* 3)
-
-New Arithmetic Cycles = (1.3 - 1.2)/0.7
-
-New Arithmetic Cycles = 0.1428571 cycles or 0.14 cycles.
+Hence, P2 is faster
