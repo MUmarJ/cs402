@@ -13,9 +13,9 @@ header-includes:
 - \rfoot{Illinois Institute of Technology - Computer Science}
 - \cfoot{}
 
-#output: pdf_document
-output: github_document
-always_allow_html: yes
+output: pdf_document
+# output: github_document
+# always_allow_html: yes
 
 ---
 
