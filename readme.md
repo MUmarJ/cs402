@@ -1,4 +1,4 @@
-CS 402 Homework 1
+CS 402 Homework 1 (Spring 2021)
 ================
 Muhammad Umar
 
@@ -40,11 +40,11 @@ addressFreq1 <- table(data1[,2])
 intervalToPlot = 100
 
 # Sort by decreasing frequency and fetch top 100 values
-sortedMaxAddressesFreq1withInterval = 
+sortedMaxAddressesFreq1withInterval =
   addressFreq1[order(addressFreq1, decreasing=TRUE)][1:intervalToPlot]
 
-barplot(sortedMaxAddressesFreq1withInterval, 
-        main="Frequency of address operations in Spice", 
+barplot(sortedMaxAddressesFreq1withInterval,
+        main="Frequency of address operations in Spice",
         xlab = "Address", ylab = "Access Count")
 ```
 
@@ -57,11 +57,11 @@ data2 <- read.csv("tex.din", sep=" ", header=F, stringsAsFactors = F)
 addressFreq2 <- table(data2[,2])
 
 # Sort by decreasing frequency and fetch top 100 values
-sortedMaxAddressesFreq2withInterval = 
+sortedMaxAddressesFreq2withInterval =
   addressFreq2[order(addressFreq2, decreasing=TRUE)][1:intervalToPlot]
 
-barplot(sortedMaxAddressesFreq2withInterval, 
-        main="Frequency of address operations in Tex", 
+barplot(sortedMaxAddressesFreq2withInterval,
+        main="Frequency of address operations in Tex",
         xlab = "Address", ylab = "Access Count")
 ```
 
