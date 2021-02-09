@@ -14,7 +14,8 @@ header-includes:
 - \cfoot{}
 
 output: pdf_document
-
+# output: github_document
+# always_allow_html: yes
 ---
 
 #### Question 1
