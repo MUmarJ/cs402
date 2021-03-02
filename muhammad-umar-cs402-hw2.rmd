@@ -13,9 +13,9 @@ header-includes:
 - \rfoot{Illinois Institute of Technology - Computer Science}
 - \cfoot{}
 
-output: pdf_document
-# output: github_document
-# always_allow_html: yes
+# output: pdf_document
+output: github_document
+always_allow_html: yes
 
 ---
 
@@ -242,7 +242,7 @@ Execution Time for 8 processors = `r parallelTime`/((8/2) * 2.0) + `r branchTime
 
 \leavevmode\newline
 
-```{r}
+```{r echo=F}
 
 speedupComparison = data.frame (
   "processors" = c(1,2,4,8),
@@ -290,8 +290,6 @@ Execution Time for 2 processors = `r parallelTime`/((2/2)* 2.0) + `r branchTime`
 Execution Time for 4 processors = `r parallelTime2`/((4/2) * 2.0) + `r branchTime` = `r {executionTime2P3 = parallelTime2/(2*2.0) + branchTime; executionTime2P3}`
 
 Execution Time for 8 processors = `r parallelTime2`/((8/2) * 2.0) + `r branchTime` = `r {executionTime2P4 = parallelTime2/(4*2.0) + branchTime; executionTime2P4}`
-                                
-\leavevmode\newline
 
 ```{r echo = F}
 

@@ -18,38 +18,13 @@ Muhammad Umar
 
 
 
-## Hi, please use the pdf file for the correct formatting
+
 
 
 
 #### 1.5 Consider three different processors P1, P2, and P3 executing the same instruction set. P1 has a 3 GHz clock rate and a CPI of 1.5. P2 has a 2.5 GHz clock rate and a CPI of 1.0. P3 has a 4.0 GHz clock rate and has a CPI of 2.2.
 
 ##### a. Which processor has the highest performance expressed in instructions per second?
-
-``` r
-library(kableExtra)
-p1Stats = list("clock" = 3.0, "cpi" = 1.5)
-p2Stats = list("clock" = 2.5, "cpi" = 1.0)
-p3Stats = list("clock" = 4.0, "cpi" = 2.2)
-
-cpuComparison <- data.frame(
-  "clockGhz" = c(p1Stats$clock, p2Stats$clock, p3Stats$clock),
-  "cpi" = c(p1Stats$cpi, p2Stats$cpi, p3Stats$cpi),
-  "instructionsPerSecond" = c(
-    10**9 * p1Stats$clock / p1Stats$cpi,
-    10**9 * p2Stats$clock / p2Stats$cpi,
-    10**9 * p3Stats$clock / p3Stats$cpi)
-)
-
-kable(cpuComparison,
-      col.names = c(
-        "Clock (GHz)",
-        "CPI",
-        "Instructions Per Second"
-        )
-      ) %>%
-  kable_styling()
-```
 
 <table class="table" style="margin-left: auto; margin-right: auto;">
 
@@ -97,7 +72,7 @@ Instructions Per Second
 
 <td style="text-align:right;">
 
-2000000000
+2.00e+09
 
 </td>
 
@@ -119,7 +94,7 @@ Instructions Per Second
 
 <td style="text-align:right;">
 
-2500000000
+2.50e+09
 
 </td>
 
@@ -141,7 +116,7 @@ Instructions Per Second
 
 <td style="text-align:right;">
 
-1818181818
+1.82e+09
 
 </td>
 
@@ -155,21 +130,6 @@ Hence, P2, has the highest performance with 250 million instructions per
 second.
 
 ##### b. If the processors each execute a program in 10 seconds, find the number of cycles and the number of instructions.
-
-``` r
-cpuComparisonB <- cpuComparison
-cpuComparisonB$cyclesIn10Seconds <- 10 * cpuComparison$clockGhz * 10**9
-cpuComparisonB$instructionsIn10Seconds <- 10 * cpuComparison$instructionsPerSecond
-kable(cpuComparisonB,
-      col.names = c(
-        "Clock (GHz)", "CPI",
-        "Instructions Per Second",
-        "Cycles in 10 Seconds",
-        "Instructions in 10 Seconds"
-        )
-      ) %>%
-  kable_styling(full_width = F)
-```
 
 <table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
 
@@ -229,7 +189,7 @@ Instructions in 10 Seconds
 
 <td style="text-align:right;">
 
-2000000000
+2.00e+09
 
 </td>
 
@@ -241,7 +201,7 @@ Instructions in 10 Seconds
 
 <td style="text-align:right;">
 
-20000000000
+2.00e+10
 
 </td>
 
@@ -263,7 +223,7 @@ Instructions in 10 Seconds
 
 <td style="text-align:right;">
 
-2500000000
+2.50e+09
 
 </td>
 
@@ -275,7 +235,7 @@ Instructions in 10 Seconds
 
 <td style="text-align:right;">
 
-25000000000
+2.50e+10
 
 </td>
 
@@ -297,7 +257,7 @@ Instructions in 10 Seconds
 
 <td style="text-align:right;">
 
-1818181818
+1.82e+09
 
 </td>
 
@@ -309,7 +269,7 @@ Instructions in 10 Seconds
 
 <td style="text-align:right;">
 
-18181818182
+1.82e+10
 
 </td>
 
@@ -330,25 +290,12 @@ Therefore,
 0.7 \* Execution Time = ((1.2 \* Instructions) \* CPI) / Clock Rate
 Execution Time = (1.2 \* Instructions \* CPI) / 0.7 \* Clock Rate
 
-So, New Clock Rate = (1.2 / 0.7) \* Clock Rate New Clock Rate =
-1.7142857 Clock Rate
+So, New Clock Rate = (1.2 / 0.7) \* Clock Rate New Clock Rate = 1.714
+Clock Rate
 
 Hence,
 
-Clock Rates should be increased by 1.7142857
-
-``` r
-cpuComparisonC <- data.frame(
-  "oldClocksGhz" = cpuComparison$clockGhz,
-  "newClocksGhz" = cpuComparison$clockGhz *(1.2/0.7)
-  )
-kable(cpuComparisonC, col.names = c(
-  "Old Clocks (GHz)",
-  "New Clocks (GHz)"
-  )
-  ) %>%
-  kable_styling()
-```
+Clock Rates should be increased by 1.714
 
 <table class="table" style="margin-left: auto; margin-right: auto;">
 
@@ -384,7 +331,7 @@ New Clocks (GHz)
 
 <td style="text-align:right;">
 
-5.142857
+5.14
 
 </td>
 
@@ -400,7 +347,7 @@ New Clocks (GHz)
 
 <td style="text-align:right;">
 
-4.285714
+4.29
 
 </td>
 
@@ -416,7 +363,7 @@ New Clocks (GHz)
 
 <td style="text-align:right;">
 
-6.857143
+6.86
 
 </td>
 
@@ -453,9 +400,9 @@ Hence, P2 is faster
 
 CPI = Time\*Clock Rate / Instructions
 
-CPI for P1 = 0.00104 \* 2.5\*10^9 / 10^6 = 2.6 CPI
+CPI for P1 = 0.001 \* 2.5\*10^9 / 10^6 = 2.6 CPI
 
-CPI for P2 = 6.666666710^{-4} \* 3.0\*10^9 / 10^6 = 2.0 CPI
+CPI for P2 = 0.001 \* 3.0\*10^9 / 10^6 = 2.0 CPI
 
 ##### b. Find the clock cycles required in both cases.
 
@@ -483,7 +430,7 @@ Execution Time = Instructions \* CPI / Clock Rate
 
 (10^9 \* 1.1)/ ClockRateA = (1.2 \* 10^9) \* 1.25 / ClockRateB
 
-ClockRateA = 1.1 / (1.2\*1.25) ClockRateB
+ClockRateA = 1.1 / (1.2 \* 1.25) ClockRateB
 
 ClockRateA = 0.733 ClockRateB
 
@@ -520,10 +467,10 @@ Execution Time = 1.9210^{10}/2.0 GHz = 9.6 seconds
 Parallel Cycles = (2.56 \* 10^9)/0.7p \* 1 + (1.28 \* 10^9)/0.7p \* 12 +
 (256 \* 10^6) \* 5 \* 1
 
-Parallel Cycles = 2.5610^{10}p + 1.2810^{9}
+Parallel Cycles = 2.5610^{10}/p + 1.2810^{9}
 
-Parallel execution time = 2.5610<sup>{10}/p/210</sup>{9} +
-1.2810<sup>{9}/210</sup>{9} = 12.8/p + 0.64
+Parallel execution time = ((2.5610^{10}/p) +
+1.2810<sup>{9})/210</sup>{9} = 12.8/p + 0.64
 
 ##### 1.9.1 Find the total execution time for this program on 1, 2, 4, and 8 processors, and show the relative speedup of the 2, 4, and 8 processor result relative to the single processor result.
 
@@ -534,27 +481,6 @@ Execution Time for 2 processors = 12.8/((2/2)\* 2.0) + 0.64 = 7.04s
 Execution Time for 4 processors = 12.8/((4/2) \* 2.0) + 0.64 = 3.84s
 
 Execution Time for 8 processors = 12.8/((8/2) \* 2.0) + 0.64 = 2.24s
-
-``` r
-speedupComparison = data.frame (
-  "processors" = c(1,2,4,8),
-  "time" = c(executionTimeP1, executionTimeP2, executionTimeP3, executionTimeP4),
-  "speedup" = c(
-    (executionTimeP1/executionTimeP1),
-    (executionTimeP1/executionTimeP2),
-    (executionTimeP1/executionTimeP3),
-    (executionTimeP1/executionTimeP4)
-    )
-  )
-
-kable(speedupComparison, col.names = c(
-  "Processors",
-  "Time (s)",
-  "Speed Up"
-  )
-  ) %>%
-  kable_styling()
-```
 
 <table class="table" style="margin-left: auto; margin-right: auto;">
 
@@ -602,7 +528,7 @@ Speed Up
 
 <td style="text-align:right;">
 
-1.000000
+1.00
 
 </td>
 
@@ -624,7 +550,7 @@ Speed Up
 
 <td style="text-align:right;">
 
-1.363636
+1.36
 
 </td>
 
@@ -646,7 +572,7 @@ Speed Up
 
 <td style="text-align:right;">
 
-2.500000
+2.50
 
 </td>
 
@@ -668,7 +594,7 @@ Speed Up
 
 <td style="text-align:right;">
 
-4.285714
+4.29
 
 </td>
 
@@ -692,47 +618,20 @@ Execution Time = 2.17610^{10}/2.0 GHz = 10.88 seconds
 Parallel Cycles = (2 \* 2.56 \* 10^9)/0.7p \* 1 + (1.28 \* 10^9)/0.7p \*
 12 + (256 \* 10^6) \* 5 \* 1
 
-Parallel Cycles = 2.925714310^{10}p + 1.2810^{9}
+Parallel Cycles = 2.92610^{10}/p + 1.2810^{9}
 
-Parallel Execution Time = 2.925714310<sup>{10}/p/210</sup>{9} +
-1.2810<sup>{9}/210</sup>{9}
+Parallel Execution Time = ((2.92610^{10}/p) +
+1.2810<sup>{9})/210</sup>{9}
 
-Parallel Execution Time = 14.6285714/p + 0.64
+Parallel Execution Time = 14.629/p + 0.64
 
 Execution Time for 1 Processor = 10.88s
 
-Execution Time for 2 processors = 12.8/((2/2)\* 2.0) + 0.64 = 7.9542857
+Execution Time for 2 processors = 12.8/((2/2)\* 2.0) + 0.64 = 7.954
 
-Execution Time for 4 processors = 14.6285714/((4/2) \* 2.0) + 0.64 =
-4.2971429
+Execution Time for 4 processors = 14.629/((4/2) \* 2.0) + 0.64 = 4.297
 
-Execution Time for 8 processors = 14.6285714/((8/2) \* 2.0) + 0.64 =
-2.4685714
-
-``` r
-speedupComparison2 = data.frame (
-  "processors" = c(1,2,4,8),
-  "time" = c(
-    executionTime2P1,
-    executionTime2P2,
-    executionTime2P3,
-    executionTime2P4
-    ),
-  "speedup" = c(
-    (executionTime2P1/executionTime2P1),
-    (executionTime2P1/executionTime2P2),
-    (executionTime2P1/executionTime2P3),
-    (executionTime2P1/executionTime2P4)
-    )
-  )
-
-kable(speedupComparison2, col.names = c(
-  "Processors",
-  "Time (s)",
-  "Speed Up")
-  ) %>%
-  kable_styling()
-```
+Execution Time for 8 processors = 14.629/((8/2) \* 2.0) + 0.64 = 2.469
 
 <table class="table" style="margin-left: auto; margin-right: auto;">
 
@@ -774,13 +673,13 @@ Speed Up
 
 <td style="text-align:right;">
 
-10.880000
+10.88
 
 </td>
 
 <td style="text-align:right;">
 
-1.000000
+1.00
 
 </td>
 
@@ -796,13 +695,13 @@ Speed Up
 
 <td style="text-align:right;">
 
-7.954286
+7.95
 
 </td>
 
 <td style="text-align:right;">
 
-1.367816
+1.37
 
 </td>
 
@@ -818,13 +717,13 @@ Speed Up
 
 <td style="text-align:right;">
 
-4.297143
+4.30
 
 </td>
 
 <td style="text-align:right;">
 
-2.531915
+2.53
 
 </td>
 
@@ -840,13 +739,13 @@ Speed Up
 
 <td style="text-align:right;">
 
-2.468571
+2.47
 
 </td>
 
 <td style="text-align:right;">
 
-4.407407
+4.41
 
 </td>
 
@@ -895,38 +794,38 @@ CPI = Execution Time/(Clock Cycle \* Instructions)
 
 CPI = 750 / ((0.333 \* 10^-9) \* (2.389 \* 10^12))
 
-CPI = 0.9427594 CPI
+CPI = 0.943 CPI
 
 ##### 1.11.2 Find the SPECratio.
 
 SPEC ratio = Reference time / Execution Time
 
-SPEC ratio = 9650 / 750 = 12.8666667
+SPEC ratio = 9650 / 750 = 12.867
 
 ##### 1.11.3 Find the increase in CPU time if the number of instructions of the benchmark is increased by 10% without affecting the CPI.
 
 Execution Time (CPU Time) = 1.1 \* (2.389 \* 10^12) \* 0.94 \* (0.333 \*
 10^-9)
 
-Execution Time (CPU Time) = 822.585258 seconds
+Execution Time (CPU Time) = 822.585 seconds
 
 ##### 1.11.4 Find the increase in CPU time if the number of instructions of the benchmark is increased by 10% and the CPI is increased by 5%.
 
 Execution Time (CPU Time) = 1.1 \* (2.389 \* 10^12) \* 1.05 \* 0.94 \*
 (0.333 \* 10^-9)
 
-Execution Time (CPU Time) = 863.7145209 seconds
+Execution Time (CPU Time) = 863.715 seconds
 
 ##### 1.11.5 Find the change in the SPECratio for this change.
 
 SPEC ratio = Reference time / Execution Time
 
-New Spec Ratio = 9650 / 863.7145209 = 11.1726731
+New Spec Ratio = 9650 / 863.715 = 11.173
 
-Change in Spec Ratio = 12.8666667 - 11.1726731 = 1.6939936
+Change in Spec Ratio = 12.867 - 11.173 = 1.694
 
-Hence the new SPEC ratio is 11.1726731 and the change from original SPEC
-ratio is 1.6939936
+Hence the new SPEC ratio is 11.173 and the change from original SPEC
+ratio is 1.694
 
 ##### 1.11.6 Suppose that we are developing a new version of the AMD Barcelona processor with a 4 GHz clock rate. We have added some additional instructions to the instruction set in such a way that the number of instructions has been reduced by 15%. Th e execution time is reduced to 700 s and the new SPECratio is 13.7. Find the new CPI.
 
@@ -937,15 +836,15 @@ CPI = (Execution Time \* Clock Rate )/ Instructions
 
 CPI = (700 \* 4 \* 10^9) / (0.85 \* 2.389 \* 10^12)
 
-CPI = 1.3788688 CPI
+CPI = 1.379 CPI
 
 ##### 1.11.7 This CPI value is larger than obtained in 1.11.1 as the clock rate was increased from 3 GHz to 4 GHz. Determine whether the increase in the CPI is similar to that of the clock rate. If they are dissimilar, why?
 
-Original Clock Rate = 1/0.333 \* 10^-9 = 3.00300310^{9} or 3 GHz
+Original Clock Rate = 1/0.333 \* 10^-9 = 3.00310^{9} or 3 GHz
 
-Clock Rate Increase Ratio = 4 GHz/3 GHz = 1.3333333
+Clock Rate Increase Ratio = 4 GHz/3 GHz = 1.333
 
-CPI Increase ratio = 1.3788688 / 0.9427594 = 1.4625882
+CPI Increase ratio = 1.379 / 0.943 = 1.463
 
 Hence, the increase in CPI is dissimilar to that of Clock Rate because
 we also reduced instructions by 15% for the new CPI.
@@ -963,7 +862,7 @@ Rate
 
 Instructions = (Execution Time \* Clock Rate )/ CPI
 
-Instructions = (0.9 \* 960 \* 10^-9 \* 4 \* 10^9) / 1.61 = 2146.5838509
+Instructions = (0.9 \* 960 \* 10^-9 \* 4 \* 10^9) / 1.61 = 2146.584
 
 ##### 1.11.10 Determine the clock rate required to give a further 10% reduction in CPU time while maintaining the number of instructions and with the CPI unchanged.
 
@@ -972,9 +871,9 @@ Rate
 
 Clock Rate = (Instructions \* CPI) / Execution Time
 
-Clock Rate = (2146.5838509 \* 1.61) / 0.9 \* (0.9 \* 960)
+Clock Rate = (2146.584 \* 1.61) / 0.9 \* (0.9 \* 960)
 
-Clock Rate = 4.4444444 GHz
+Clock Rate = 4.444 GHz
 
 ##### 1.11.11 Determine the clock rate if the CPI is reduced by 15% and the CPU time by 20% while the number of instructions is unchanged.
 
@@ -983,10 +882,10 @@ Rate
 
 Clock Rate = (Instructions \* CPI) / Execution Time
 
-Clock Rate = (2146.5838509 \* (0.85 \* 1.61)) / (0.8 \* (0.9 \* (0.9 \*
+Clock Rate = (2146.584 \* (0.85 \* 1.61)) / (0.8 \* (0.9 \* (0.9 \*
 960))
 
-Clock Rate = 4.7222222 GHz
+Clock Rate = 4.722 GHz
 
 #### 1.12 Section 1.10 cites as a pitfall the utilization of a subset of the performance equation as a performance metric. To illustrate this, consider the following two processors. P1 has a clock rate of 4 GHz, average CPI of 0.9, and requires the execution of 5.0E9 instructions. P2 has a clock rate of 3 GHz, an average CPI of 0.75, and requires the execution of 1.0E9 instructions.
 
@@ -999,8 +898,7 @@ Execution Time for P1 = (5 \* 10^9 \* 0.9) / (4.0\*10^9) = 1.125s
 
 Execution Time for P2 = (1 \* 10^9 \* 0.75) / (3.0\*10^9) = 0.25s
 
-This fallacy is false, as the term implies. P2 is quite a lot faster
-than P1.
+This is indeed, a fallacy. P2 is quite a lot faster than P1.
 
 ##### 1.12.2 Another fallacy is to consider that the processor executing the largest number of instructions will need a larger CPU time. Considering that processor P1 is executing a sequence of 1.0E9 instructions and that the CPI of processors P1 and P2 do not change, determine the number of instructions that P2 can execute in the same time that P1 needs to execute 1.0E9 instructions.
 
@@ -1011,13 +909,13 @@ Execution Time for P1 = (1 \* 10^9 \* 0.9) / (4.0\*10^9) = 0.225s
 
 Instructions for P2 with P1 execution time = (0.225 \* (3.0\*10^9))/0.75
 
-\= 910^{8} instructions
+Instructions for P2 with P1 execution time = 910^{8} instructions
 
 ##### 1.12.3 A common fallacy is to use MIPS (millions of instructions per second) to compare the performance of two different processors, and consider that the processor with the largest MIPS has the largest performance. Check if this is true for P1 and P2.
 
 MIPS = Clock Rate / (CPI \* 10^6)
 
-MIPS for P1 = (4 \* 10^9) / (0.9 \* 10^6) = 4444.4444444
+MIPS for P1 = (4 \* 10^9) / (0.9 \* 10^6) = 4444.444
 
 MIPS for P2 = (3 \* 10^9) / (0.75 \* 10^6) = 4000
 
@@ -1028,7 +926,7 @@ implies that P1 is faster.
 
 MFLOPS = FLOP Instructions / (Time \* Million)
 
-MFLOPS for P1 = (0.4 \* 5 \* 10^9) / (1.125\* 10^6) = 1777.7777778
+MFLOPS for P1 = (0.4 \* 5 \* 10^9) / (1.125\* 10^6) = 1777.778
 
 MFLOPS for P2 = (0.4 \* 1 \* 10^9) / (0.25\* 10^6) = 1600
 
@@ -1039,7 +937,8 @@ hence MFLOPS is a fallacy.
 
 ##### 1.13.1 By how much is the total time reduced if the time for FP operations is reduced by 20%?
 
-Total Time reduced with 80% FP time = 70 - (0.8 \* 70) = 14
+Total Time reduced with 80% FP time = 70 - (0.8 \* 70) Total Time
+reduced with 80% FP time = 14
 
 Hence the total time will be reduced by 14 seconds bringing it to 236
 seconds or by 5.6%.
@@ -1056,7 +955,7 @@ Old time spent on INT operations = 250 - 70 - 40 - 85 = 55
 New time spent on INT operations = 200 - 70 - 40 - 85 = 5
 
 Hence the time spent on INT operations will be reduced by 50 seconds or
-by 90.9090909%.
+by 90.909%.
 
 ##### 1.13.3 Can the total time can be reduced by 20% by reducing only the time for branch instructions?
 
@@ -1081,14 +980,13 @@ Rate
 Total Cycles = Instructions \* CPI
 
 Total Cycles = (50 \* 106 \* 1) + (110 \* 106 \* 1) + (80 \* 106 \* 4) +
-(16 \* 106 \* 2) = 5.427210^{4}
+(16 \* 106 \* 2) = 54272
 
-Execution Time = 5.427210^{4} / (2 \* 10^9) = 2.713610^{-5} s or
-27.136us
+Execution Time = 54272 / (2 \* 10^9) = 2.71410^{-5} s or 27.136us
 
 ##### 1.14.1 By how much must we improve the CPI of FP instructions if we want the program to run two times faster?
 
-New Execution Time = Execution Time / 2 = 1.356810^{-5}
+New Execution Time = Execution Time / 2 = 1.35710^{-5}
 
 Execution Time = (Instructions \* CPI) / Clock Rate or Cycles / Clock
 Rate
@@ -1096,15 +994,15 @@ Rate
 New Total Cycles = (50 \* 106 \* NewCPI) + (110 \* 106 \* 1) + (80 \*
 106 \* 4) + (16 \* 106 \* 2)
 
-New Total Cycles = 5300 \* NewCPI + 4.897210^{4}
+New Total Cycles = 5300 \* NewCPI + 48972
 
 Execution Time = Cycles / Clock Rate
 
 Cycles = Execution Time \* Clock Rate
 
-5300 \* newCPI + 4.897210^{4} = 1.356810^{-5} \* (2 \* 10^9)
+5300 \* newCPI + 48972 = 1.35710^{-5} \* (2 \* 10^9)
 
-newCPI = (2.713610^{4} - 4.897210^{4}) / 5300
+newCPI = (27136 - 48972) / 5300
 
 newCPI = -4.12 CPI
 
@@ -1113,7 +1011,7 @@ instructions CPI as shown by the negative result.
 
 ##### 1.14.2 By how much must we improve the CPI of L/S instructions if we want the program to run two times faster?
 
-New Execution Time = Execution Time / 2 = 1.356810^{-5}
+New Execution Time = Execution Time / 2 = 1.35710^{-5}
 
 Execution Time = (Instructions \* CPI) / Clock Rate or Cycles / Clock
 Rate
@@ -1121,15 +1019,15 @@ Rate
 New Total Cycles = (50 \* 106 \* 1) + (110 \* 106 \* 1) + (80 \* 106 \*
 newCPI) + (16 \* 106 \* 2)
 
-New Total Cycles = 2.035210^{4} + 8480 \* newCPI
+New Total Cycles = 20352 + 8480 \* newCPI
 
 Execution Time = Cycles / Clock Rate
 
 Cycles = Execution Time \* Clock Rate
 
-8480 \* newCPI + 2.035210^{4} = 1.356810^{-5} \* (2 \* 10^9)
+8480 \* newCPI + 20352 = 1.35710^{-5} \* (2 \* 10^9)
 
-newCPI = (2.713610^{4} - 2.035210^{4}) / 8480
+newCPI = (27136 - 20352) / 8480
 
 newCPI = 0.8 CPI
 
@@ -1144,50 +1042,14 @@ Rate
 Total Cycles = Instructions \* CPI
 
 Total Cycles = (0.6 \* 50 \* 106 \* 1) + (0.6 \* 110 \* 106 \* 1) + (0.7
-\* 80 \* 106 \* 4) + (0.7 \* 16 \* 106 \* 2) = 3.6294410^{4}
+\* 80 \* 106 \* 4) + (0.7 \* 16 \* 106 \* 2) = 36294.4
 
-Execution Time = 3.6294410^{4} / (2 \* 10^9) = 1.8147210^{-5} s or
-18.1472us
+Execution Time = 36294.4 / (2 \* 10^9) = 1.81510^{-5} s or 18.147us
 
-Hence the execution time improved from 2.713610^{-5} to 1.8147210^{-5}
-or by 33.125%
+Hence the execution time improved from 2.71410^{-5} to 1.81510^{-5} or
+by 33.125%
 
 #### 1.15 When a program is adapted to run on multiple processors in a multiprocessor system, the execution time on each processor is comprised of computing time and the overhead time required for locked critical sections and/or to send data from one processor to another. Assume a program requires t = 100 s of execution time on one processor. When run p processors, each processor requires t/p s, as well as an additional 4 s of overhead, irrespective of the number of processors. Compute the per-processor execution time for 2, 4, 8, 16, 32, 64, and 128 processors. For each case, list the corresponding speedup relative to a single processor and the ratio between actual speedup versus ideal speedup (speedup if there was no overhead).
-
-``` r
-time <- 100
-overhead <- 4
-processors <- c(2, 4, 8, 16, 32, 64, 128)
-
-comparison <- data.frame(processors)
-
-# Compute Time For Each Processor (Divide time by number of processors)
-comparison$timeInSeconds <- (time/comparison$processors) + overhead
-
-# Compute Speed Up (Find ratio of time of each processor with original time)
-comparison$speedUpPercentage <- (1-(comparison$timeInSeconds/time))*100
-
-# Compute Ideal Time For Each Processor
-comparison$idealTimeInSeconds <- time/comparison$processors
-
-# Compute Ideal Speed Up
-comparison$idealSpeedUpPercentage <- (1-(comparison$idealTimeInSeconds/time))*100
-
-# Compute Speed Up vs Ideal Speed Up
-comparison$actualVSIdealSpeedUp <-
-  (comparison$speedUpPercentage/comparison$idealSpeedUpPercentage)
-
-# Draw Table with clean column names
-kable(comparison, col.names = c(
-  "Processors",
-  "Time (s)",
-  "Speed Up (%)",
-  "Ideal Time (s)",
-  "Ideal Speed Up (%)",
-  "Actual vs Ideal Speed Up Ratio")
-  ) %>%
-  kable_styling()
-```
 
 <table class="table" style="margin-left: auto; margin-right: auto;">
 
@@ -1247,31 +1109,31 @@ Actual vs Ideal Speed Up Ratio
 
 <td style="text-align:right;">
 
-54.00000
+54.00
 
 </td>
 
 <td style="text-align:right;">
 
-46.00000
+46.0
 
 </td>
 
 <td style="text-align:right;">
 
-50.00000
+50.000
 
 </td>
 
 <td style="text-align:right;">
 
-50.00000
+50.0
 
 </td>
 
 <td style="text-align:right;">
 
-0.9200000
+0.920
 
 </td>
 
@@ -1287,31 +1149,31 @@ Actual vs Ideal Speed Up Ratio
 
 <td style="text-align:right;">
 
-29.00000
+29.00
 
 </td>
 
 <td style="text-align:right;">
 
-71.00000
+71.0
 
 </td>
 
 <td style="text-align:right;">
 
-25.00000
+25.000
 
 </td>
 
 <td style="text-align:right;">
 
-75.00000
+75.0
 
 </td>
 
 <td style="text-align:right;">
 
-0.9466667
+0.947
 
 </td>
 
@@ -1327,31 +1189,31 @@ Actual vs Ideal Speed Up Ratio
 
 <td style="text-align:right;">
 
-16.50000
+16.50
 
 </td>
 
 <td style="text-align:right;">
 
-83.50000
+83.5
 
 </td>
 
 <td style="text-align:right;">
 
-12.50000
+12.500
 
 </td>
 
 <td style="text-align:right;">
 
-87.50000
+87.5
 
 </td>
 
 <td style="text-align:right;">
 
-0.9542857
+0.954
 
 </td>
 
@@ -1367,31 +1229,31 @@ Actual vs Ideal Speed Up Ratio
 
 <td style="text-align:right;">
 
-10.25000
+10.25
 
 </td>
 
 <td style="text-align:right;">
 
-89.75000
+89.8
 
 </td>
 
 <td style="text-align:right;">
 
-6.25000
+6.250
 
 </td>
 
 <td style="text-align:right;">
 
-93.75000
+93.8
 
 </td>
 
 <td style="text-align:right;">
 
-0.9573333
+0.957
 
 </td>
 
@@ -1407,31 +1269,31 @@ Actual vs Ideal Speed Up Ratio
 
 <td style="text-align:right;">
 
-7.12500
+7.12
 
 </td>
 
 <td style="text-align:right;">
 
-92.87500
+92.9
 
 </td>
 
 <td style="text-align:right;">
 
-3.12500
+3.125
 
 </td>
 
 <td style="text-align:right;">
 
-96.87500
+96.9
 
 </td>
 
 <td style="text-align:right;">
 
-0.9587097
+0.959
 
 </td>
 
@@ -1447,31 +1309,31 @@ Actual vs Ideal Speed Up Ratio
 
 <td style="text-align:right;">
 
-5.56250
+5.56
 
 </td>
 
 <td style="text-align:right;">
 
-94.43750
+94.4
 
 </td>
 
 <td style="text-align:right;">
 
-1.56250
+1.562
 
 </td>
 
 <td style="text-align:right;">
 
-98.43750
+98.4
 
 </td>
 
 <td style="text-align:right;">
 
-0.9593651
+0.959
 
 </td>
 
@@ -1487,31 +1349,31 @@ Actual vs Ideal Speed Up Ratio
 
 <td style="text-align:right;">
 
-4.78125
+4.78
 
 </td>
 
 <td style="text-align:right;">
 
-95.21875
+95.2
 
 </td>
 
 <td style="text-align:right;">
 
-0.78125
+0.781
 
 </td>
 
 <td style="text-align:right;">
 
-99.21875
+99.2
 
 </td>
 
 <td style="text-align:right;">
 
-0.9596850
+0.960
 
 </td>
 
