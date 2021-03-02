@@ -13,9 +13,9 @@ header-includes:
 - \rfoot{Illinois Institute of Technology - Computer Science}
 - \cfoot{}
 
-output: pdf_document
-# output: github_document
-# always_allow_html: yes
+# output: pdf_document
+output: github_document
+always_allow_html: yes
 
 ---
 
@@ -28,7 +28,7 @@ output: pdf_document
 
 \leavevmode\newline
 
-```{r}
+```{r echo=F}
 library(kableExtra)
 p1Stats = list("clock" = 3.0, "cpi" = 1.5)
 p2Stats = list("clock" = 2.5, "cpi" = 1.0)
@@ -57,13 +57,11 @@ kable(cpuComparison,
 
 Hence, P2, has the highest performance with 250 million instructions per second.
 
-\pagebreak
-
 ##### b. If the processors each execute a program in 10 seconds, find the number of cycles and the number of instructions.
 
 \leavevmode\newline
 
-```{r}
+```{r echo=F}
 cpuComparisonB <- cpuComparison
 cpuComparisonB$cyclesIn10Seconds <- 10 * cpuComparison$clockGhz * 10**9
 cpuComparisonB$instructionsIn10Seconds <- 10 * cpuComparison$instructionsPerSecond
@@ -77,6 +75,8 @@ kable(cpuComparisonB,
       ) %>% 
   kable_styling(full_width = F)
 ```
+
+\pagebreak
 
 ##### c. We are trying to reduce the execution time by 30% but this leads to an increase of 20% in the CPI. What clock rate should we have to get this time reduction?
 
@@ -99,7 +99,7 @@ Hence,
 
 Clock Rates should be increased by `r 1.2 / 0.7`
 
-```{r}
+```{r echo=F}
 cpuComparisonC <- data.frame(
   "oldClocksGhz" = cpuComparison$clockGhz,
   "newClocksGhz" = cpuComparison$clockGhz *(1.2/0.7)
@@ -184,6 +184,8 @@ ClockRateA = 1.1 / (1.2 * 1.25) ClockRateB
 ClockRateA = `r signif(1.1 / (1.2*1.25), digits=3)` ClockRateB
 
 Hence, processor A is actually `r signif( 1 - 1.1 / (1.2*1.25), digits=3)*100`% slower than processor B or `r signif(1.1 / (1.2*1.25), digits=3)*100`% the speed of processor B.
+
+\pagebreak
 
 ##### c. A new compiler is developed that uses only 6.0E8 instructions and has an average CPI of 1.1. What is the speedup of using this new compiler versus using compiler A or B on the original processor?
 
@@ -291,7 +293,7 @@ Execution Time for 8 processors = `r parallelTime2`/((8/2) * 2.0) + `r branchTim
                                 
 \leavevmode\newline
 
-```{r}
+```{r echo = F}
 
 speedupComparison2 = data.frame (
   "processors" = c(1,2,4,8),
@@ -646,7 +648,7 @@ Hence the execution time improved from `r execTime14` to `r execTime143` or by `
 
 \leavevmode\newline
 
-```{r}
+```{r echo=F}
 time <- 100
 overhead <- 4
 processors <- c(2, 4, 8, 16, 32, 64, 128)

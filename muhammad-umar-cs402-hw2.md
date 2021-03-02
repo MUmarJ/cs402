@@ -26,33 +26,6 @@ Muhammad Umar
 
 ##### a. Which processor has the highest performance expressed in instructions per second?
 
-``` r
-library(kableExtra)
-p1Stats = list("clock" = 3.0, "cpi" = 1.5)
-p2Stats = list("clock" = 2.5, "cpi" = 1.0)
-p3Stats = list("clock" = 4.0, "cpi" = 2.2)
-
-cpuComparison <- data.frame(
-  "clockGhz" = c(p1Stats$clock, p2Stats$clock, p3Stats$clock),
-  "cpi" = c(p1Stats$cpi, p2Stats$cpi, p3Stats$cpi),
-  "instructionsPerSecond" = c(
-    10**9 * p1Stats$clock / p1Stats$cpi,
-    10**9 * p2Stats$clock / p2Stats$cpi,
-    10**9 * p3Stats$clock / p3Stats$cpi)
-)
-
-options(scipen = 1, digits = 3)
-
-kable(cpuComparison, 
-      col.names = c(
-        "Clock (GHz)",
-        "CPI",
-        "Instructions Per Second"
-        )
-      ) %>% 
-  kable_styling()
-```
-
 <table class="table" style="margin-left: auto; margin-right: auto;">
 
 <thead>
@@ -157,21 +130,6 @@ Hence, P2, has the highest performance with 250 million instructions per
 second.
 
 ##### b. If the processors each execute a program in 10 seconds, find the number of cycles and the number of instructions.
-
-``` r
-cpuComparisonB <- cpuComparison
-cpuComparisonB$cyclesIn10Seconds <- 10 * cpuComparison$clockGhz * 10**9
-cpuComparisonB$instructionsIn10Seconds <- 10 * cpuComparison$instructionsPerSecond
-kable(cpuComparisonB, 
-      col.names = c(
-        "Clock (GHz)", "CPI",
-        "Instructions Per Second",
-        "Cycles in 10 Seconds",
-        "Instructions in 10 Seconds"
-        )
-      ) %>% 
-  kable_styling(full_width = F)
-```
 
 <table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
 
@@ -338,19 +296,6 @@ Clock Rate
 Hence,
 
 Clock Rates should be increased by 1.714
-
-``` r
-cpuComparisonC <- data.frame(
-  "oldClocksGhz" = cpuComparison$clockGhz,
-  "newClocksGhz" = cpuComparison$clockGhz *(1.2/0.7)
-  )
-kable(cpuComparisonC, col.names = c(
-  "Old Clocks (GHz)",
-  "New Clocks (GHz)"
-  )
-  ) %>% 
-  kable_styling()
-```
 
 <table class="table" style="margin-left: auto; margin-right: auto;">
 
@@ -708,31 +653,6 @@ Execution Time for 2 processors = 12.8/((2/2)\* 2.0) + 0.64 = 7.954
 Execution Time for 4 processors = 14.629/((4/2) \* 2.0) + 0.64 = 4.297
 
 Execution Time for 8 processors = 14.629/((8/2) \* 2.0) + 0.64 = 2.469
-
-``` r
-speedupComparison2 = data.frame (
-  "processors" = c(1,2,4,8),
-  "time" = c(
-    executionTime2P1,
-    executionTime2P2,
-    executionTime2P3,
-    executionTime2P4
-    ), 
-  "speedup" = c(
-    (executionTime2P1/executionTime2P1),
-    (executionTime2P1/executionTime2P2),
-    (executionTime2P1/executionTime2P3),
-    (executionTime2P1/executionTime2P4)
-    )
-  )
-
-kable(speedupComparison2, col.names = c(
-  "Processors",
-  "Time (s)",
-  "Speed Up")
-  ) %>%
-  kable_styling()
-```
 
 <table class="table" style="margin-left: auto; margin-right: auto;">
 
@@ -1151,41 +1071,6 @@ Hence the execution time improved from 2.71410^{-5} to 1.81510^{-5} or
 by 33.125%
 
 #### 1.15 When a program is adapted to run on multiple processors in a multiprocessor system, the execution time on each processor is comprised of computing time and the overhead time required for locked critical sections and/or to send data from one processor to another. Assume a program requires t = 100 s of execution time on one processor. When run p processors, each processor requires t/p s, as well as an additional 4 s of overhead, irrespective of the number of processors. Compute the per-processor execution time for 2, 4, 8, 16, 32, 64, and 128 processors. For each case, list the corresponding speedup relative to a single processor and the ratio between actual speedup versus ideal speedup (speedup if there was no overhead).
-
-``` r
-time <- 100
-overhead <- 4
-processors <- c(2, 4, 8, 16, 32, 64, 128)
-
-comparison <- data.frame(processors)
-
-# Compute Time For Each Processor (Divide time by number of processors)
-comparison$timeInSeconds <- (time/comparison$processors) + overhead
-
-# Compute Speed Up (Find ratio of time of each processor with original time)
-comparison$speedUpPercentage <- (1-(comparison$timeInSeconds/time))*100
-
-# Compute Ideal Time For Each Processor
-comparison$idealTimeInSeconds <- time/comparison$processors
-
-# Compute Ideal Speed Up
-comparison$idealSpeedUpPercentage <- (1-(comparison$idealTimeInSeconds/time))*100
-
-# Compute Speed Up vs Ideal Speed Up
-comparison$actualVSIdealSpeedUp <- 
-  (comparison$speedUpPercentage/comparison$idealSpeedUpPercentage)
-
-# Draw Table with clean column names
-kable(comparison, col.names = c(
-  "Processors",
-  "Time (s)",
-  "Speed Up (%)",
-  "Ideal Time (s)",
-  "Ideal Speed Up (%)",
-  "Actual vs Ideal Speed Up Ratio")
-  ) %>%
-  kable_styling()
-```
 
 <table class="table" style="margin-left: auto; margin-right: auto;">
 
