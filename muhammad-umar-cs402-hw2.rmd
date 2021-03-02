@@ -9,7 +9,7 @@ header-includes:
 - \fancypagestyle{plain}{}
 - \chead{\thepage\ / \pageref{LastPage}}
 - \fancyhead[R]{Homework \#2}
-- \lfoot{cs402 V02 Fall 2020}
+- \lfoot{cs402 A01 Spring 2021}
 - \rfoot{Illinois Institute of Technology - Computer Science}
 - \cfoot{}
 
@@ -42,6 +42,8 @@ cpuComparison <- data.frame(
     10**9 * p2Stats$clock / p2Stats$cpi,
     10**9 * p3Stats$clock / p3Stats$cpi)
 )
+
+options(scipen = 1, digits = 3)
 
 kable(cpuComparison, 
       col.names = c(
@@ -177,7 +179,7 @@ Execution Time = Instructions * CPI / Clock Rate
 
 (10^9 * 1.1)/ ClockRateA = (1.2 * 10^9) * 1.25 / ClockRateB
 
-ClockRateA = 1.1 / (1.2*1.25) ClockRateB
+ClockRateA = 1.1 / (1.2 * 1.25) ClockRateB
 
 ClockRateA = `r signif(1.1 / (1.2*1.25), digits=3)` ClockRateB
 
@@ -217,9 +219,9 @@ Execution Time =  `r cycles`/2.0 GHz = `r Ghz = 2.0*10^9; {executionTimeP1 = cyc
 
 Parallel Cycles = (2.56 * 10^9)/0.7p * 1 + (1.28 * 10^9)/0.7p * 12 + (256 * 10^6) * 5 * 1
 
-Parallel Cycles = `r parallelCyclesSum = (2.56 * 10^9)/0.7 * 1 + (1.28 * 10^9)/0.7 * 12; parallelCyclesSum`p + `r branchCycles = (256 * 10^6) * 5 * 1; branchCycles`
+Parallel Cycles = `r parallelCyclesSum = (2.56 * 10^9)/0.7 * 1 + (1.28 * 10^9)/0.7 * 12; parallelCyclesSum`/p + `r branchCycles = (256 * 10^6) * 5 * 1; branchCycles`
 
-Parallel execution time = `r parallelCyclesSum`/p/`r Ghz` + `r branchCycles`/`r Ghz`
+Parallel execution time = ((`r parallelCyclesSum`/p) + `r branchCycles`)/`r Ghz`
  = `r parallelTime = parallelCyclesSum / Ghz; parallelTime`/p + `r branchTime = branchCycles / Ghz; branchTime`
  
 \pagebreak
@@ -273,9 +275,9 @@ Execution Time =  `r cycles2`/2.0 GHz = `r Ghz = 2.0*10^9; {executionTime2P1 = c
 
 Parallel Cycles = (2 * 2.56 * 10^9)/0.7p * 1 + (1.28 * 10^9)/0.7p * 12 + (256 * 10^6) * 5 * 1
 
-Parallel Cycles = `r parallelCyclesSum2 = ((2 * 2.56) * 10^9/0.7) * 1 + (1.28 * 10^9)/0.7 * 12; parallelCyclesSum2`p + `r branchCycles = (256 * 10^6) * 5 * 1; branchCycles`
+Parallel Cycles = `r parallelCyclesSum2 = ((2 * 2.56) * 10^9/0.7) * 1 + (1.28 * 10^9)/0.7 * 12; parallelCyclesSum2`/p + `r branchCycles = (256 * 10^6) * 5 * 1; branchCycles`
 
-Parallel Execution Time = `r parallelCyclesSum2`/p/`r Ghz` + `r branchCycles`/`r Ghz`
+Parallel Execution Time = ((`r parallelCyclesSum2`/p) + `r branchCycles`)/`r Ghz`
 
 Parallel Execution Time = `r parallelTime2 = parallelCyclesSum2 / Ghz; parallelTime2`/p + `r branchTime = branchCycles / Ghz; branchTime`
 
@@ -479,7 +481,7 @@ Execution Time for P1 = (5 * 10^9 * 0.9) / (4.0*10^9) =
 Execution Time for P2 = (1 * 10^9 * 0.75) / (3.0*10^9) = 
 `r {execTimeQ12P2 = (1 * 10^9 * 0.75) / (3.0*10^9); execTimeQ12P2}`s
 
-This fallacy is false, as the term implies. P2 is quite a lot faster than P1.
+This is indeed, a fallacy. P2 is quite a lot faster than P1.
 
 ##### 1.12.2  Another fallacy is to consider that the processor executing the largest number of instructions will need a larger CPU time. Considering that processor P1 is executing a sequence of 1.0E9 instructions and that the CPI of processors P1 and P2 do not change, determine the number of instructions that P2 can execute in the same time that P1 needs to execute 1.0E9 instructions.
 
@@ -492,7 +494,7 @@ Execution Time for P1 = (1 * 10^9 * 0.9) / (4.0*10^9) =
 
 Instructions for P2 with P1 execution time = (0.225 * (3.0*10^9))/0.75 
 
-= `r {instructionsQ122P2 = (0.225 * (3.0*10^9))/0.75; instructionsQ122P2}` instructions
+Instructions for P2 with P1 execution time = `r {instructionsQ122P2 = (0.225 * (3.0*10^9))/0.75; instructionsQ122P2}` instructions
 
 
 ##### 1.12.3  A common fallacy is to use MIPS (millions of instructions per second) to compare the performance of two different processors, and consider that the processor with the largest MIPS has the largest performance. Check if this is true for P1 and P2.
@@ -521,17 +523,14 @@ Even the MFLOPS test seems to favor P1 while P2 is actually faster, hence MFLOPS
 
 #### 1.13  Another pitfall cited is expecting to improve the overall performance of a computer by improving only one aspect of the computer. Consider a computer running a program that requires 250 s, with 70 s spent executing FP instructions, 85 s executed L/S instructions, and 40 s spent executing branch instructions.
 
-\leavevmode\newline
-
 ##### 1.13.1  By how much is the total time reduced if the time for FP operations is reduced by 20%?
 
 \leavevmode\newline
 
-Total Time reduced with 80% FP time = 70 - (0.8 * 70) = 
-`r (70 - 0.8*70)`
+Total Time reduced with 80% FP time = 70 - (0.8 * 70)
+Total Time reduced with 80% FP time = `r (70 - 0.8*70)`
 
 Hence the total time will be reduced by 14 seconds bringing it to `r 250 - 14` seconds or by `r (1-(250-14)/250) *100`%.
-
 
 ##### 1.13.2  By how much is the time for INT operations reduced if the total time is reduced by 20%?
 
