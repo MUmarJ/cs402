@@ -1,6 +1,26 @@
-# CS 402 Homework 4
-
+CS 402 Homework 4
+================
 Muhammad Umar
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 #### 5.1 In this exercise we look at memory locality properties of matrix computation. Th e following code is written in C, where elements within the same row are stored contiguously. Assume each word is a 32-bit integer.
 
@@ -78,7 +98,7 @@ are stored contiguously.
 
 ##### 5.3 For a direct-mapped cache design with a 32-bit address, the following bits of the address are used to access the cache.
 
-![Table 5.3](./tables/table53q.png)
+![Table 5.3](./tables/table53q.png) 
 
 ##### 5.3.1 What is the cache block size (in words)?
 
